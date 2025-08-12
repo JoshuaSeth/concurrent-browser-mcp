@@ -1,15 +1,14 @@
-# concurrent-browser-mcp
+# concurrent-browser-mcp-session
 
-A multi-concurrent browser MCP (Model Context Protocol) server built with Playwright.
+A multi-concurrent browser MCP (Model Context Protocol) server built with Playwright, enhanced with session recording and automatic test generation capabilities.
 
-<a href="https://glama.ai/mcp/servers/@sailaoda/concurrent-browser-mcp">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@sailaoda/concurrent-browser-mcp/badge" alt="Concurrent Browser MCP server" />
-</a>
+**Fork of [concurrent-browser-mcp](https://github.com/sailaoda/concurrent-browser-mcp) with advanced session recording features**
 
-[中文](README.zh.md) | **English**
+[中文](docs/README.zh.md) | **English**
 
 ## Features
 
+### Core Features (from original)
 - 🚀 **Multi-Instance Concurrency**: Support running multiple browser instances simultaneously
 - 🎯 **Instance Management**: Dynamically create, manage, and clean up browser instances  
 - 🔧 **Flexible Configuration**: Support various browser types and custom configurations
@@ -17,24 +16,32 @@ A multi-concurrent browser MCP (Model Context Protocol) server built with Playwr
 - 🌐 **Full Feature Support**: Complete browser automation capabilities (navigation, clicking, input, screenshots, etc.)
 - 💻 **Cross-Platform**: Support Chromium, Firefox, WebKit
 
+### New Session Recording Features
+- 📹 **Session Recording**: Automatically records all browser actions as JSON sessions
+- 🎭 **Session Replay**: Replay recorded sessions exactly as they were performed
+- 🧪 **Test Generation**: Convert any successful browser session into a Playwright test
+- ✅ **Continuous Testing**: What you manually verify today becomes an automated test forever
+- 📝 **Session Management**: Save, load, and manage recorded browser sessions
+- 🔄 **CI/CD Ready**: Generated tests can be added to pipelines for regression testing
+
 ## Installation
 
 ### Option 1: Install from npm (Recommended)
 
 ```bash
 # Global installation
-npm install -g concurrent-browser-mcp
+npm install -g concurrent-browser-mcp-session
 
 # Or use npx directly (no installation required)
-npx concurrent-browser-mcp
+npx concurrent-browser-mcp-session
 ```
 
 ### Option 2: Build from Source
 
 ```bash
 # Clone repository
-git clone https://github.com/sailaoda/concurrent-browser-mcp.git
-cd concurrent-browser-mcp
+git clone https://github.com/yourusername/concurrent-browser-mcp-session.git
+cd concurrent-browser-mcp-session
 
 # Install dependencies
 npm install
@@ -49,8 +56,8 @@ npm link
 ### Option 3: Quick Install Script
 
 ```bash
-git clone https://github.com/sailaoda/concurrent-browser-mcp.git
-cd concurrent-browser-mcp
+git clone https://github.com/yourusername/concurrent-browser-mcp-session.git
+cd concurrent-browser-mcp-session
 ./install.sh
 ```
 
@@ -59,11 +66,11 @@ cd concurrent-browser-mcp
 ### 1. Basic Usage
 
 ```bash
-# Start server (default configuration)
-npx concurrent-browser-mcp
+# Start server (default configuration with session recording enabled)
+npx concurrent-browser-mcp-session
 
 # Custom configuration
-npx concurrent-browser-mcp --max-instances 25 --browser firefox --headless false
+npx concurrent-browser-mcp-session --max-instances 25 --browser firefox --headless false
 ```
 
 ### 2. MCP Client Configuration
@@ -77,7 +84,7 @@ Choose the appropriate configuration based on your installation method:
   "mcpServers": {
     "concurrent-browser": {
       "command": "npx",
-      "args": ["concurrent-browser-mcp", "--max-instances", "20"]
+      "args": ["concurrent-browser-mcp-session", "--max-instances", "20"]
     }
   }
 }
@@ -89,7 +96,7 @@ Choose the appropriate configuration based on your installation method:
 {
   "mcpServers": {
     "concurrent-browser": {
-      "command": "concurrent-browser-mcp",
+      "command": "concurrent-browser-mcp-session",
       "args": ["--max-instances", "20"]
     }
   }
@@ -105,8 +112,8 @@ If you built from source, you can reference the local build version directly:
   "mcpServers": {
     "concurrent-browser": {
       "command": "node",
-      "args": ["/path/to/concurrent-browser-mcp/dist/index.js", "--max-instances", "20"],
-      "cwd": "/path/to/concurrent-browser-mcp"
+      "args": ["/path/to/concurrent-browser-mcp-session/dist/index.js", "--max-instances", "20"],
+      "cwd": "/path/to/concurrent-browser-mcp-session"
     }
   }
 }
@@ -119,7 +126,7 @@ Or use relative path (if config file and project are in the same directory level
   "mcpServers": {
     "concurrent-browser": {
       "command": "node",
-      "args": ["./concurrent-browser-mcp/dist/index.js", "--max-instances", "20"]
+      "args": ["./concurrent-browser-mcp-session/dist/index.js", "--max-instances", "20"]
     }
   }
 }
@@ -133,7 +140,7 @@ If you used `npm link`:
 {
   "mcpServers": {
     "concurrent-browser": {
-      "command": "concurrent-browser-mcp",
+      "command": "concurrent-browser-mcp-session",
       "args": ["--max-instances", "20"]
     }
   }
@@ -232,6 +239,69 @@ Proxy: Auto-detection enabled  # or shows detected proxy address
 - Authentication with username/password is not supported
 - Proxy can be set via environment variables without manual configuration
 - Proxy detection is completed automatically at service startup without affecting runtime performance
+
+## Session Recording & Test Generation
+
+### How It Works
+
+Every browser interaction is automatically recorded as a session. When you close a browser instance, you receive a session ID that can be used to:
+1. Replay the exact same browser actions
+2. Generate a Playwright test from the session
+3. Add the test to your CI/CD pipeline
+
+### Workflow Example
+
+```javascript
+// 1. Perform browser actions (automatically recorded)
+const instance = await callTool('browser_create_instance', { browserType: 'chromium' });
+await callTool('browser_navigate', { instanceId, url: 'https://example.com' });
+await callTool('browser_click', { instanceId, selector: 'button.submit' });
+
+// 2. Close browser and get session ID
+const result = await callTool('browser_close_instance', { instanceId });
+console.log(result.data.message); // "Browser closed. Session ID: abc123..."
+
+// 3. Generate test from session
+await callTool('session_save_test', {
+  sessionId: 'abc123...',
+  testName: 'User Login Flow',
+  expectedString: 'Welcome'  // Optional: verify specific text appears
+});
+// Test saved to: tests/unit/test_abc123_timestamp.spec.js
+```
+
+### Session Tools
+
+- `session_generate_test`: Generate Playwright test code from a session
+- `session_save_test`: Generate and save test to file (tests/unit/)
+- `session_list`: List all saved sessions
+- `session_replay`: Replay a recorded session
+- `session_export`: Export session as JSON
+- `session_toggle_recording`: Enable/disable session recording
+
+### Test Generation Use Cases
+
+1. **Bug Reproduction → Regression Test**: When you find a bug, the reproduction steps automatically become a test
+2. **Exploratory Testing → Automated Test**: Manual exploration converts to automated verification
+3. **User Journey → E2E Test**: Successful user workflows become end-to-end tests
+4. **No Code Test Creation**: Build comprehensive test suites without writing code
+
+### Generated Test Example
+
+```javascript
+import { test, expect } from '@playwright/test';
+
+test('User Login Flow', async ({ page }) => {
+  test.setTimeout(30000);
+  
+  await page.goto('https://example.com');
+  await page.click('button.submit');
+  
+  // Verify expected content
+  const content = await page.content();
+  expect(content).toContain('Welcome');
+});
+```
 
 ## Available Tools
 
@@ -438,8 +508,8 @@ xdg-open screenshot-*.png # Linux
 
 ```bash
 # 1. Clone project
-git clone https://github.com/sailaoda/concurrent-browser-mcp.git
-cd concurrent-browser-mcp
+git clone https://github.com/yourusername/concurrent-browser-mcp-session.git
+cd concurrent-browser-mcp-session
 
 # 2. Install dependencies
 npm install
@@ -476,17 +546,18 @@ npm test
 ### Project Structure
 
 ```
-concurrent-browser-mcp/
+concurrent-browser-mcp-session/
 ├── src/                    # Source code directory
 │   ├── index.ts           # CLI entry point
 │   ├── server.ts          # MCP server main logic
 │   ├── browser-manager.ts # Browser instance manager
+│   ├── session-recorder.ts # Session recording logic
 │   └── tools.ts           # MCP tool definitions and implementation
 ├── dist/                  # Build artifacts directory
+├── docs/                  # Documentation
+├── test/                  # Test scripts
 ├── assets/                # Static resources directory
 ├── examples/              # Example scripts
-├── test-real-screenshot.js # Real test script
-├── config.example.json    # Configuration example
 ├── package.json           # Project configuration
 ├── tsconfig.json         # TypeScript configuration
 └── README.md             # Project documentation
@@ -507,7 +578,7 @@ node dist/index.js --max-instances 20
   "mcpServers": {
     "concurrent-browser": {
       "command": "node",
-      "args": ["/absolute/path/to/concurrent-browser-mcp/dist/index.js", "--max-instances", "20"]
+      "args": ["/absolute/path/to/concurrent-browser-mcp-session/dist/index.js", "--max-instances", "20"]
     }
   }
 }
@@ -520,13 +591,13 @@ node dist/index.js --max-instances 20
 npm link
 
 # Now you can use it like a global package
-concurrent-browser-mcp --max-instances 20
+concurrent-browser-mcp-session --max-instances 20
 
 # Use in MCP configuration
 {
   "mcpServers": {
     "concurrent-browser": {
-      "command": "concurrent-browser-mcp",
+      "command": "concurrent-browser-mcp-session",
       "args": ["--max-instances", "20"]
     }
   }
@@ -537,7 +608,7 @@ concurrent-browser-mcp --max-instances 20
 
 ```bash
 # Run directly in project directory
-cd /path/to/concurrent-browser-mcp
+cd /path/to/concurrent-browser-mcp-session
 npm run build
 node dist/index.js
 
@@ -546,7 +617,7 @@ node dist/index.js
   "mcpServers": {
     "concurrent-browser": {
       "command": "node",
-      "args": ["./concurrent-browser-mcp/dist/index.js"],
+      "args": ["./concurrent-browser-mcp-session/dist/index.js"],
       "cwd": "/parent/directory/path"
     }
   }
@@ -573,3 +644,11 @@ node dist/index.js --max-instances 5 --browser chromium --headless false
 3. Commit changes (`git commit -m 'Add some amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
+
+## Credits
+
+This project is a fork of [concurrent-browser-mcp](https://github.com/sailaoda/concurrent-browser-mcp) by sailaoda, enhanced with session recording and test generation capabilities.
+
+## License
+
+MIT License - See LICENSE file for details
