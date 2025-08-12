@@ -1,0 +1,74 @@
+{
+  "id": "652dd9d5-4369-435d-88fb-3c902a30b6b3",
+  "instanceId": "b2eab895-c6cb-4086-8603-27783a0b9329",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T08:35:30.584Z",
+  "actions": [
+    {
+      "id": "a8cfbd01-ea61-40fd-bca2-330e55b4d5a4",
+      "timestamp": "2025-08-12T08:35:32.391Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "b2eab895-c6cb-4086-8603-27783a0b9329",
+        "url": "https://example.com"
+      },
+      "result": {
+        "url": "https://example.com/",
+        "title": "Example Domain"
+      },
+      "duration": 0
+    },
+    {
+      "id": "ede31418-6a3e-45d6-8cdb-0c824f58849f",
+      "timestamp": "2025-08-12T08:35:32.532Z",
+      "tool": "browser_screenshot",
+      "parameters": {
+        "instanceId": "b2eab895-c6cb-4086-8603-27783a0b9329",
+        "fullPage": true
+      },
+      "result": {
+        "screenshot": "[SCREENSHOT_DATA]"
+      },
+      "duration": 0
+    },
+    {
+      "id": "1f3a6897-7436-4111-9d78-2e0a46684998",
+      "timestamp": "2025-08-12T08:35:32.636Z",
+      "tool": "browser_get_page_info",
+      "parameters": {
+        "instanceId": "b2eab895-c6cb-4086-8603-27783a0b9329"
+      },
+      "result": {
+        "url": "https://example.com/",
+        "title": "Example Domain",
+        "content": "<!DOCTYPE html><html><head>\n    <title>Example Domain</title>\n\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <style type=\"text/css\">\n    body {\n        background-color: #f0f0f2;\n        margin: 0;\n        padding: 0;\n        font-family: -apple-system, system-ui, BlinkMacSystemFont, \"Segoe UI\", \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        \n    }\n    div {\n        width: 600px;\n        margin: 5em auto;\n        padding: 2em;\n        background-color: #fdfdff;\n        border-radius: 0.5em;\n        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);\n    }\n    a:link, a:visited {\n        color: #38488f;\n        text-decoration: none;\n    }\n    @media (max-width: 700px) {\n        div {\n            margin: 0 auto;\n            width: auto;\n        }\n    }\n    </style>    \n</head>\n\n<body>\n<div>\n    <h1>Example Domain</h1>\n    <p>This domain is for use in illustrative examples in documents. You may use this\n    domain in literature without prior coordination or asking for permission.</p>\n    <p><a href=\"https://www.iana.org/domains/example\">More information...</a></p>\n</div>\n\n\n</body></html>",
+        "contentLength": 1248,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "loadState": "complete",
+        "stats": {
+          "linksCount": 1,
+          "imagesCount": 0,
+          "formsCount": 0,
+          "scriptsCount": 0,
+          "stylesheetsCount": 0
+        },
+        "timestamp": "2025-08-12T08:35:32.636Z"
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "test-session",
+    "description": "Testing session recording functionality"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

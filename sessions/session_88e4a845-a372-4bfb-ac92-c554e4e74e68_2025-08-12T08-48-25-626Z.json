@@ -1,0 +1,61 @@
+{
+  "id": "88e4a845-a372-4bfb-ac92-c554e4e74e68",
+  "instanceId": "61e7e535-1dea-46f0-9c46-51378bca581c",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T08:48:23.519Z",
+  "actions": [
+    {
+      "id": "857e0ecf-2024-4438-bed7-5d4083ee95bd",
+      "timestamp": "2025-08-12T08:48:23.521Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": false,
+        "metadata": {
+          "name": "enhanced-recording-test",
+          "description": "Testing full page data capture"
+        }
+      },
+      "result": {
+        "instanceId": "61e7e535-1dea-46f0-9c46-51378bca581c",
+        "sessionId": "88e4a845-a372-4bfb-ac92-c554e4e74e68",
+        "browserType": "chromium",
+        "headless": false,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metadata": {
+          "name": "enhanced-recording-test",
+          "description": "Testing full page data capture"
+        }
+      },
+      "duration": 0
+    },
+    {
+      "id": "2f92561d-e99f-43bb-a683-25bb7c87ce16",
+      "timestamp": "2025-08-12T08:48:25.626Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "61e7e535-1dea-46f0-9c46-51378bca581c",
+        "url": "https://en.wikipedia.org/wiki/Web_scraping"
+      },
+      "result": {
+        "url": "https://en.wikipedia.org/wiki/Web_scraping",
+        "title": "Web scraping - Wikipedia"
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "enhanced-recording-test",
+    "description": "Testing full page data capture"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

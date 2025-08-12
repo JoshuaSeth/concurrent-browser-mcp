@@ -1,11 +1,11 @@
 {
-  "name": "concurrent-browser-mcp",
-  "version": "1.5.0",
-  "description": "A concurrent browser MCP server that supports multiple parallel browser instances",
+  "name": "concurrent-browser-mcp-session",
+  "version": "1.6.0",
+  "description": "A concurrent browser MCP server with session recording & replay - supports multiple parallel browser instances and captures all actions as JSON",
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "concurrent-browser-mcp": "dist/index.js"
+    "concurrent-browser-mcp-session": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -21,21 +21,27 @@
     "automation",
     "playwright", 
     "concurrent",
-    "parallel"
+    "parallel",
+    "session-recording",
+    "replay",
+    "debugging",
+    "json-recording"
   ],
-  "author": "sailaoda",
+  "author": "sethvanderbijl (forked from sailaoda)",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/sailaoda/concurrent-browser-mcp#readme",
+  "homepage": "https://github.com/sethvanderbijl/concurrent-browser-mcp-session#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sailaoda/concurrent-browser-mcp.git"
+    "url": "git+https://github.com/sethvanderbijl/concurrent-browser-mcp-session.git"
   },
   "bugs": {
-    "url": "https://github.com/sailaoda/concurrent-browser-mcp/issues"
+    "url": "https://github.com/sethvanderbijl/concurrent-browser-mcp-session/issues"
   },
   "files": [
     "dist/**/*",
     "README.md",
+    "README-DETAILED.md",
+    "SESSION-RECORDING.md",
     "config.example.json"
   ],
   "publishConfig": {

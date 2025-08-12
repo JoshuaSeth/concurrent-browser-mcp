@@ -8,6 +8,7 @@ export interface BrowserInstance {
   createdAt: Date;
   lastUsed: Date;
   isActive: boolean;
+  sessionId?: string;
   metadata?: {
     name?: string;
     tags?: string[];
@@ -42,6 +43,11 @@ export interface ServerConfig {
   instanceTimeout: number; // in milliseconds
   cleanupInterval: number; // in milliseconds
   proxy?: ProxyConfig; // Global proxy configuration
+  sessionRecording?: {
+    enabled?: boolean;
+    autoSave?: boolean;
+    sessionsDir?: string;
+  };
 }
 
 export interface ToolResult {

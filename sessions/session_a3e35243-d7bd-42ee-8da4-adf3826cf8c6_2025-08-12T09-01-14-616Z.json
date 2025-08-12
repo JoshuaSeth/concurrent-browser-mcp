@@ -1,0 +1,84 @@
+{
+  "id": "a3e35243-d7bd-42ee-8da4-adf3826cf8c6",
+  "instanceId": "7115a7c5-3dea-499b-b26f-2049069e9290",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:00:26.801Z",
+  "actions": [
+    {
+      "id": "4c44f611-0fe7-44cd-9224-c22b4314f1fd",
+      "timestamp": "2025-08-12T09:00:26.802Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": false,
+        "metadata": {
+          "name": "test-generation-demo",
+          "description": "Demo session for test generation"
+        }
+      },
+      "result": {
+        "instanceId": "7115a7c5-3dea-499b-b26f-2049069e9290",
+        "sessionId": "a3e35243-d7bd-42ee-8da4-adf3826cf8c6",
+        "browserType": "chromium",
+        "headless": false,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metadata": {
+          "name": "test-generation-demo",
+          "description": "Demo session for test generation"
+        }
+      },
+      "duration": 0
+    },
+    {
+      "id": "7fa28740-c89f-40d7-845c-9a6d0d1f62c6",
+      "timestamp": "2025-08-12T09:00:40.574Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "7115a7c5-3dea-499b-b26f-2049069e9290",
+        "url": "https://httpbin.org/"
+      },
+      "result": {
+        "url": "https://httpbin.org/",
+        "title": "httpbin.org"
+      },
+      "duration": 0
+    },
+    {
+      "id": "8ac4de49-0927-4a73-ab00-2768278c0576",
+      "timestamp": "2025-08-12T09:01:12.577Z",
+      "tool": "browser_click",
+      "parameters": {
+        "instanceId": "7115a7c5-3dea-499b-b26f-2049069e9290",
+        "selector": "a[href=\"/html\"]"
+      },
+      "error": "Click failed: page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a[href=\"/html\"]')\u001b[22m\n",
+      "duration": 0
+    },
+    {
+      "id": "1047d099-8f72-4e34-bf20-48ff68625c1f",
+      "timestamp": "2025-08-12T09:01:14.616Z",
+      "tool": "browser_go_back",
+      "parameters": {
+        "instanceId": "7115a7c5-3dea-499b-b26f-2049069e9290"
+      },
+      "result": {
+        "url": "about:blank"
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "test-generation-demo",
+    "description": "Demo session for test generation"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

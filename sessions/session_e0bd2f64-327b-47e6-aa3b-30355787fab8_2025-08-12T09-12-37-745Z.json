@@ -1,0 +1,44 @@
+{
+  "id": "e0bd2f64-327b-47e6-aa3b-30355787fab8",
+  "instanceId": "0101aa76-4f20-4c71-995d-a74a7957f0c1",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:12:37.741Z",
+  "actions": [
+    {
+      "id": "d1e3c415-609b-4fca-9d29-daa17e1a0fea",
+      "timestamp": "2025-08-12T09:12:37.745Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": true,
+        "metadata": {
+          "name": "Search Form Test"
+        }
+      },
+      "result": {
+        "instanceId": "0101aa76-4f20-4c71-995d-a74a7957f0c1",
+        "sessionId": "e0bd2f64-327b-47e6-aa3b-30355787fab8",
+        "browserType": "chromium",
+        "headless": true,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metadata": {
+          "name": "Search Form Test"
+        }
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "Search Form Test"
+  },
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

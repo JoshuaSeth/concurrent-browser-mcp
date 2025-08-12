@@ -12,6 +12,20 @@ export class BrowserTools {
   constructor(private browserManager: BrowserManager) {}
 
   /**
+   * Record action to session
+   */
+  private async recordAction(instanceId: string, action: {
+    tool: string;
+    parameters: any;
+    result?: any;
+    error?: string;
+    metadata?: any;
+  }): Promise<void> {
+    const recorder = this.browserManager.getSessionRecorder();
+    await recorder.recordAction(instanceId, action);
+  }
+
+  /**
    * Get all tool definitions
    */
   getTools(): Tool[] {
@@ -485,6 +499,221 @@ export class BrowserTools {
           },
           required: ['instanceId']
         }
+      },
+
+      // Session management tools
+      {
+        name: 'session_get_current',
+        description: 'Get the current session for a browser instance',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            instanceId: {
+              type: 'string',
+              description: 'Instance ID'
+            }
+          },
+          required: ['instanceId']
+        }
+      },
+      {
+        name: 'session_list_all',
+        description: 'List all active sessions',
+        inputSchema: {
+          type: 'object',
+          properties: {}
+        }
+      },
+      {
+        name: 'session_save',
+        description: 'Save a session to file',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            instanceId: {
+              type: 'string',
+              description: 'Instance ID'
+            }
+          },
+          required: ['instanceId']
+        }
+      },
+      {
+        name: 'session_export',
+        description: 'Export session as JSON or Playwright script',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            instanceId: {
+              type: 'string',
+              description: 'Instance ID'
+            },
+            format: {
+              type: 'string',
+              enum: ['json', 'playwright'],
+              description: 'Export format',
+              default: 'json'
+            }
+          },
+          required: ['instanceId']
+        }
+      },
+      {
+        name: 'session_list_saved',
+        description: 'List all saved session files',
+        inputSchema: {
+          type: 'object',
+          properties: {}
+        }
+      },
+      {
+        name: 'session_load',
+        description: 'Load a saved session from file',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            filepath: {
+              type: 'string',
+              description: 'Path to session file'
+            }
+          },
+          required: ['filepath']
+        }
+      },
+      {
+        name: 'session_replay',
+        description: 'Replay a saved session on a new browser instance',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            filepath: {
+              type: 'string',
+              description: 'Path to session file or session ID'
+            }
+          },
+          required: ['filepath']
+        }
+      },
+      {
+        name: 'session_replay_with_verification',
+        description: 'Replay a session with result verification and comparison',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            filepath: {
+              type: 'string',
+              description: 'Path to session file'
+            },
+            verifyResults: {
+              type: 'boolean',
+              description: 'Verify that results match original session',
+              default: true
+            },
+            captureNewData: {
+              type: 'boolean',
+              description: 'Capture additional page data during replay',
+              default: false
+            },
+            comparePageContent: {
+              type: 'boolean',
+              description: 'Compare page content between original and replay',
+              default: false
+            },
+            stopOnError: {
+              type: 'boolean',
+              description: 'Stop replay if an action fails',
+              default: false
+            },
+            delayBetweenActions: {
+              type: 'number',
+              description: 'Delay in milliseconds between actions',
+              default: 100
+            }
+          },
+          required: ['filepath']
+        }
+      },
+      {
+        name: 'session_get_stats',
+        description: 'Get statistics for a session',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            instanceId: {
+              type: 'string',
+              description: 'Instance ID'
+            }
+          },
+          required: ['instanceId']
+        }
+      },
+      {
+        name: 'session_toggle_recording',
+        description: 'Enable or disable session recording',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            enabled: {
+              type: 'boolean',
+              description: 'Whether to enable recording'
+            }
+          },
+          required: ['enabled']
+        }
+      },
+      {
+        name: 'session_generate_test',
+        description: 'Generate a Playwright test from a recorded browser session. This powerful tool converts any successful browser interaction sequence into a permanent, automated test that can be run repeatedly to ensure the UI continues working correctly. Perfect for turning exploratory testing or bug reproductions into regression tests. Use this after successfully completing any important user workflow to create a standardized test that will catch if that workflow breaks in the future.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            sessionId: {
+              type: 'string',
+              description: 'Session ID returned when closing browser (or filepath to saved session JSON). This ID represents all the actions you performed during the browser session.'
+            },
+            testName: {
+              type: 'string',
+              description: 'Descriptive name for the test that explains what user workflow or feature it validates (e.g., "User Login Flow", "Search Feature", "Checkout Process")',
+              default: 'Generated test'
+            },
+            expectedString: {
+              type: 'string',
+              description: 'Optional string to verify appears in the final page content. Use this to ensure the workflow reached the expected end state (e.g., "Welcome" after login, "Order Confirmed" after checkout). If omitted, test only verifies no errors occurred.'
+            },
+            timeout: {
+              type: 'number',
+              description: 'Test timeout in milliseconds',
+              default: 30000
+            }
+          },
+          required: ['sessionId']
+        }
+      },
+      {
+        name: 'session_save_test',
+        description: 'Generate and save a Playwright test to file from a recorded browser session. This is the primary tool for converting successful browser interactions into permanent automated tests. After you successfully navigate a website, fill forms, click buttons, or complete any user workflow, use this tool with the session ID to create a test that will run that exact sequence automatically in the future. This enables continuous testing - what you manually verify today becomes an automated regression test forever. The generated test can be added to CI/CD pipelines to ensure the UI never breaks. Essential for: (1) Converting bug reproductions into regression tests, (2) Turning successful user journeys into automated checks, (3) Creating tests from exploratory testing sessions, (4) Building a test suite without writing code.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            sessionId: {
+              type: 'string',
+              description: 'Session ID returned when closing browser (you get this in the close message). This contains the full recording of all actions performed.'
+            },
+            testName: {
+              type: 'string',
+              description: 'Clear, descriptive name for what this test validates (e.g., "User Can Complete Purchase", "Search Returns Results", "Form Validation Works")'
+            },
+            expectedString: {
+              type: 'string',
+              description: 'Optional text that should appear if the workflow succeeds (e.g., "Payment successful", "Search results", "Form submitted"). Omit to only check for no errors.'
+            },
+            outputPath: {
+              type: 'string',
+              description: 'Path where to save the test file (defaults to tests/unit/ in current directory)'
+            }
+          },
+          required: ['sessionId']
+        }
       }
     ];
   }
@@ -493,10 +722,12 @@ export class BrowserTools {
    * Execute tools
    */
   async executeTools(name: string, args: any): Promise<ToolResult> {
+    let result: ToolResult;
+    
     try {
       switch (name) {
         case 'browser_create_instance':
-          return await this.browserManager.createInstance(
+          result = await this.browserManager.createInstance(
             {
               browserType: args.browserType || 'chromium',
               headless: args.headless ?? true,
@@ -505,82 +736,389 @@ export class BrowserTools {
             },
             args.metadata
           );
+          // Record creation action to the new instance's session
+          if (result.success && result.data?.instanceId) {
+            await this.recordAction(result.data.instanceId, {
+              tool: name,
+              parameters: args,
+              result: result.data
+            });
+          }
+          return result;
 
         case 'browser_list_instances':
           return this.browserManager.listInstances();
 
         case 'browser_close_instance':
-          return await this.browserManager.closeInstance(args.instanceId);
+          result = await this.browserManager.closeInstance(args.instanceId);
+          // Recording happens before closing in closeInstance method
+          return result;
 
         case 'browser_close_all_instances':
           return await this.browserManager.closeAllInstances();
 
         case 'browser_navigate':
-          return await this.navigate(args.instanceId, args.url, {
+          result = await this.navigate(args.instanceId, args.url, {
             timeout: args.timeout || 30000,
             waitUntil: args.waitUntil || 'load'
           });
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_go_back':
-          return await this.goBack(args.instanceId);
+          result = await this.goBack(args.instanceId);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_go_forward':
-          return await this.goForward(args.instanceId);
+          result = await this.goForward(args.instanceId);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_refresh':
-          return await this.refresh(args.instanceId);
+          result = await this.refresh(args.instanceId);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_click':
-          return await this.click(args.instanceId, args.selector, {
+          result = await this.click(args.instanceId, args.selector, {
             button: args.button || 'left',
             clickCount: args.clickCount || 1,
             delay: args.delay || 0,
             timeout: args.timeout || 30000
           });
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_type':
-          return await this.type(args.instanceId, args.selector, args.text, {
+          result = await this.type(args.instanceId, args.selector, args.text, {
             delay: args.delay || 0,
             timeout: args.timeout || 30000
           });
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_fill':
-          return await this.fill(args.instanceId, args.selector, args.value, args.timeout || 30000);
+          result = await this.fill(args.instanceId, args.selector, args.value, args.timeout || 30000);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_select_option':
-          return await this.selectOption(args.instanceId, args.selector, args.value, args.timeout || 30000);
+          result = await this.selectOption(args.instanceId, args.selector, args.value, args.timeout || 30000);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_get_page_info':
-          return await this.getPageInfo(args.instanceId);
+          result = await this.getPageInfo(args.instanceId);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_get_element_text':
-          return await this.getElementText(args.instanceId, args.selector, args.timeout || 30000);
+          result = await this.getElementText(args.instanceId, args.selector, args.timeout || 30000);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_get_element_attribute':
-          return await this.getElementAttribute(args.instanceId, args.selector, args.attribute, args.timeout || 30000);
+          result = await this.getElementAttribute(args.instanceId, args.selector, args.attribute, args.timeout || 30000);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_screenshot':
-          return await this.screenshot(args.instanceId, {
+          result = await this.screenshot(args.instanceId, {
             fullPage: args.fullPage || false,
             type: args.type || 'png',
             quality: args.quality || 80
           }, args.selector);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? { screenshot: '[SCREENSHOT_DATA]' } : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_wait_for_element':
-          return await this.waitForElement(args.instanceId, args.selector, args.timeout || 30000);
+          result = await this.waitForElement(args.instanceId, args.selector, args.timeout || 30000);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_wait_for_navigation':
-          return await this.waitForNavigation(args.instanceId, args.timeout || 30000);
+          result = await this.waitForNavigation(args.instanceId, args.timeout || 30000);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_evaluate':
-          return await this.evaluate(args.instanceId, args.script);
+          result = await this.evaluate(args.instanceId, args.script);
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? result.data : undefined,
+            error: result.error
+          });
+          return result;
 
         case 'browser_get_markdown':
-          return await this.getMarkdown(args.instanceId, {
+          result = await this.getMarkdown(args.instanceId, {
             includeLinks: args.includeLinks ?? true,
             maxLength: args.maxLength || 10000,
             selector: args.selector
           });
+          await this.recordAction(args.instanceId, {
+            tool: name,
+            parameters: args,
+            result: result.success ? { markdown: '[TRUNCATED]' } : undefined,
+            error: result.error
+          });
+          return result;
+
+        // Session management tools
+        case 'session_get_current':
+          const session = this.browserManager.getSessionRecorder().getSession(args.instanceId);
+          return {
+            success: !!session,
+            data: session,
+            error: session ? undefined : `No session found for instance ${args.instanceId}`
+          };
+
+        case 'session_list_all':
+          const sessions = this.browserManager.getSessionRecorder().getAllSessions();
+          return {
+            success: true,
+            data: { sessions, count: sessions.length }
+          };
+
+        case 'session_save':
+          try {
+            const filepath = await this.browserManager.getSessionRecorder().saveSession(args.instanceId);
+            return {
+              success: true,
+              data: { filepath }
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to save session: ${error}`
+            };
+          }
+
+        case 'session_export':
+          try {
+            const exported = await this.browserManager.getSessionRecorder().exportAsScript(
+              args.instanceId,
+              args.format || 'json'
+            );
+            return {
+              success: true,
+              data: { format: args.format || 'json', content: exported }
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to export session: ${error}`
+            };
+          }
+
+        case 'session_list_saved':
+          try {
+            const savedSessions = await this.browserManager.getSessionRecorder().listSavedSessions();
+            return {
+              success: true,
+              data: { sessions: savedSessions, count: savedSessions.length }
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to list saved sessions: ${error}`
+            };
+          }
+
+        case 'session_load':
+          try {
+            const loadedSession = await this.browserManager.getSessionRecorder().loadSession(args.filepath);
+            return {
+              success: true,
+              data: loadedSession
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to load session: ${error}`
+            };
+          }
+
+        case 'session_replay':
+          try {
+            const replayResult = await this.browserManager.getSessionRecorder().replaySession(
+              args.filepath,
+              this.browserManager
+            );
+            return {
+              success: replayResult.success,
+              data: replayResult.success ? { instanceId: replayResult.instanceId } : undefined,
+              error: replayResult.errors ? replayResult.errors.join(', ') : undefined
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to replay session: ${error}`
+            };
+          }
+
+        case 'session_replay_with_verification':
+          try {
+            const replayResult = await this.browserManager.getSessionRecorder().replaySessionWithVerification(
+              args.filepath,
+              this.browserManager,
+              {
+                verifyResults: args.verifyResults ?? true,
+                captureNewData: args.captureNewData ?? false,
+                comparePageContent: args.comparePageContent ?? false,
+                stopOnError: args.stopOnError ?? false,
+                delayBetweenActions: args.delayBetweenActions ?? 100
+              }
+            );
+            return {
+              success: replayResult.success,
+              data: {
+                instanceId: replayResult.instanceId,
+                comparison: replayResult.comparison,
+                errors: replayResult.errors
+              }
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to replay session with verification: ${error}`
+            };
+          }
+
+        case 'session_get_stats':
+          const stats = this.browserManager.getSessionRecorder().getSessionStats(args.instanceId);
+          return {
+            success: !!stats,
+            data: stats,
+            error: stats ? undefined : `No session found for instance ${args.instanceId}`
+          };
+
+        case 'session_toggle_recording':
+          this.browserManager.getSessionRecorder().setRecordingEnabled(args.enabled);
+          return {
+            success: true,
+            data: { recordingEnabled: args.enabled }
+          };
+
+        case 'session_generate_test':
+          try {
+            const testCode = await this.browserManager.getSessionRecorder().generatePlaywrightTest(
+              args.sessionId,
+              {
+                testName: args.testName,
+                expectedString: args.expectedString,
+                timeout: args.timeout
+              }
+            );
+            return {
+              success: true,
+              data: { 
+                testCode,
+                message: `Test generated successfully for session ${args.sessionId}`
+              }
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to generate test: ${error}`
+            };
+          }
+
+        case 'session_save_test':
+          try {
+            const filePath = await this.browserManager.getSessionRecorder().saveTestToFile(
+              args.sessionId,
+              {
+                testName: args.testName,
+                expectedString: args.expectedString,
+                outputPath: args.outputPath
+              }
+            );
+            return {
+              success: true,
+              data: { 
+                filePath,
+                message: `Test saved to ${filePath}`
+              }
+            };
+          } catch (error) {
+            return {
+              success: false,
+              error: `Failed to save test: ${error}`
+            };
+          }
 
         default:
           return {

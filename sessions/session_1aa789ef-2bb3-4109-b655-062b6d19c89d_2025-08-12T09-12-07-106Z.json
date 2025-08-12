@@ -1,0 +1,17 @@
+{
+  "id": "1aa789ef-2bb3-4109-b655-062b6d19c89d",
+  "instanceId": "b180db46-51a0-4789-a4fa-6d27f2cdad75",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:12:07.106Z",
+  "actions": [],
+  "metadata": {
+    "name": "Simple Navigation Test"
+  },
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

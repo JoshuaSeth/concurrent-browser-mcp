@@ -1,0 +1,56 @@
+{
+  "id": "1aa789ef-2bb3-4109-b655-062b6d19c89d",
+  "instanceId": "b180db46-51a0-4789-a4fa-6d27f2cdad75",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:12:07.106Z",
+  "actions": [
+    {
+      "id": "3f78a908-2ec7-4284-948b-b0a476957ff7",
+      "timestamp": "2025-08-12T09:12:07.111Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": true,
+        "metadata": {
+          "name": "Simple Navigation Test"
+        }
+      },
+      "result": {
+        "instanceId": "b180db46-51a0-4789-a4fa-6d27f2cdad75",
+        "sessionId": "1aa789ef-2bb3-4109-b655-062b6d19c89d",
+        "browserType": "chromium",
+        "headless": true,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metadata": {
+          "name": "Simple Navigation Test"
+        }
+      },
+      "duration": 0
+    },
+    {
+      "id": "581c9d5d-1f35-407a-bd65-88666e5404cc",
+      "timestamp": "2025-08-12T09:12:37.097Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "b180db46-51a0-4789-a4fa-6d27f2cdad75",
+        "url": "https://example.com"
+      },
+      "error": "Navigation failed: page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://example.com/\", waiting until \"load\"\u001b[22m\n",
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "Simple Navigation Test"
+  },
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "endedAt": "2025-08-12T09:12:37.599Z"
+}

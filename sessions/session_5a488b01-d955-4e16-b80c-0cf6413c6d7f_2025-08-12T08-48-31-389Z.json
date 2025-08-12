@@ -1,0 +1,18 @@
+{
+  "id": "5a488b01-d955-4e16-b80c-0cf6413c6d7f",
+  "instanceId": "aba22833-2263-4a64-b810-19c908273d73",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T08:48:31.389Z",
+  "actions": [],
+  "metadata": {
+    "name": "enhanced-recording-test",
+    "description": "Testing full page data capture"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

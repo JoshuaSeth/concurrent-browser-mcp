@@ -1,0 +1,100 @@
+{
+  "id": "8444b5da-6abb-475f-865b-4b9af0f0e14f",
+  "instanceId": "ebd22172-8445-4312-b240-9e5d321e7dc8",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:21:58.928Z",
+  "actions": [
+    {
+      "id": "562baba7-c17e-447d-a06e-2bdb564b9845",
+      "timestamp": "2025-08-12T09:21:58.929Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": true,
+        "metadata": {
+          "name": "Final Demo Session"
+        }
+      },
+      "result": {
+        "instanceId": "ebd22172-8445-4312-b240-9e5d321e7dc8",
+        "sessionId": "8444b5da-6abb-475f-865b-4b9af0f0e14f",
+        "browserType": "chromium",
+        "headless": true,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metadata": {
+          "name": "Final Demo Session"
+        }
+      },
+      "duration": 0
+    },
+    {
+      "id": "1b4d2503-9805-4212-94ae-6e0b77dff4d4",
+      "timestamp": "2025-08-12T09:21:59.823Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "ebd22172-8445-4312-b240-9e5d321e7dc8",
+        "url": "https://example.com"
+      },
+      "result": {
+        "url": "https://example.com/",
+        "title": "Example Domain"
+      },
+      "duration": 0
+    },
+    {
+      "id": "95133a95-37df-4b3f-9622-7fa737ee06db",
+      "timestamp": "2025-08-12T09:21:59.881Z",
+      "tool": "browser_screenshot",
+      "parameters": {
+        "instanceId": "ebd22172-8445-4312-b240-9e5d321e7dc8",
+        "fullPage": true
+      },
+      "result": {
+        "screenshot": "[SCREENSHOT_DATA]"
+      },
+      "duration": 0
+    },
+    {
+      "id": "c87ae97f-8533-4f72-852b-c639a5a38dab",
+      "timestamp": "2025-08-12T09:21:59.886Z",
+      "tool": "browser_get_page_info",
+      "parameters": {
+        "instanceId": "ebd22172-8445-4312-b240-9e5d321e7dc8"
+      },
+      "result": {
+        "url": "https://example.com/",
+        "title": "Example Domain",
+        "content": "<!DOCTYPE html><html><head>\n    <title>Example Domain</title>\n\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <style type=\"text/css\">\n    body {\n        background-color: #f0f0f2;\n        margin: 0;\n        padding: 0;\n        font-family: -apple-system, system-ui, BlinkMacSystemFont, \"Segoe UI\", \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        \n    }\n    div {\n        width: 600px;\n        margin: 5em auto;\n        padding: 2em;\n        background-color: #fdfdff;\n        border-radius: 0.5em;\n        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);\n    }\n    a:link, a:visited {\n        color: #38488f;\n        text-decoration: none;\n    }\n    @media (max-width: 700px) {\n        div {\n            margin: 0 auto;\n            width: auto;\n        }\n    }\n    </style>    \n</head>\n\n<body>\n<div>\n    <h1>Example Domain</h1>\n    <p>This domain is for use in illustrative examples in documents. You may use this\n    domain in literature without prior coordination or asking for permission.</p>\n    <p><a href=\"https://www.iana.org/domains/example\">More information...</a></p>\n</div>\n\n\n</body></html>",
+        "contentLength": 1248,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "loadState": "complete",
+        "stats": {
+          "linksCount": 1,
+          "imagesCount": 0,
+          "formsCount": 0,
+          "scriptsCount": 0,
+          "stylesheetsCount": 0
+        },
+        "timestamp": "2025-08-12T09:21:59.886Z"
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "Final Demo Session"
+  },
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "endedAt": "2025-08-12T09:21:59.886Z"
+}

@@ -1,0 +1,74 @@
+{
+  "id": "a413d118-e12f-4a2b-bf44-ced674c5f276",
+  "instanceId": "a369f3c6-f1b0-4f1f-89d5-4420c2bf188f",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T08:35:13.992Z",
+  "actions": [
+    {
+      "id": "1a54266a-46aa-4746-8514-acf9aac1adf6",
+      "timestamp": "2025-08-12T08:35:13.993Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": false,
+        "metadata": {
+          "name": "test-session",
+          "description": "Testing session recording functionality"
+        }
+      },
+      "result": {
+        "instanceId": "a369f3c6-f1b0-4f1f-89d5-4420c2bf188f",
+        "sessionId": "a413d118-e12f-4a2b-bf44-ced674c5f276",
+        "browserType": "chromium",
+        "headless": false,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "metadata": {
+          "name": "test-session",
+          "description": "Testing session recording functionality"
+        }
+      },
+      "duration": 0
+    },
+    {
+      "id": "612947aa-60e0-4d6e-a285-62c348904211",
+      "timestamp": "2025-08-12T08:35:15.634Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "a369f3c6-f1b0-4f1f-89d5-4420c2bf188f",
+        "url": "https://example.com"
+      },
+      "result": {
+        "url": "https://example.com/",
+        "title": "Example Domain"
+      },
+      "duration": 0
+    },
+    {
+      "id": "2955d236-030d-41b1-9d2d-ddf496597ce1",
+      "timestamp": "2025-08-12T08:35:17.690Z",
+      "tool": "browser_screenshot",
+      "parameters": {
+        "instanceId": "a369f3c6-f1b0-4f1f-89d5-4420c2bf188f",
+        "fullPage": true
+      },
+      "result": {
+        "screenshot": "[SCREENSHOT_DATA]"
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "test-session",
+    "description": "Testing session recording functionality"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

@@ -2,16 +2,25 @@ import { chromium, firefox, webkit, Browser } from 'playwright';
 import { v4 as uuidv4 } from 'uuid';
 import { BrowserInstance, BrowserConfig, ServerConfig, ToolResult } from './types.js';
 import { execSync } from 'child_process';
+import { SessionRecorder } from './session-recorder.js';
 
 export class BrowserManager {
   private instances: Map<string, BrowserInstance> = new Map();
   private config: ServerConfig;
   private cleanupTimer?: NodeJS.Timeout;
   private detectedProxy?: string;
+  private sessionRecorder: SessionRecorder;
 
   constructor(config: ServerConfig) {
     this.config = config;
     this.startCleanupTimer();
+    
+    // Initialize session recorder
+    this.sessionRecorder = new SessionRecorder({
+      recordingEnabled: config.sessionRecording?.enabled ?? true,
+      autoSave: config.sessionRecording?.autoSave ?? true,
+      sessionsDir: config.sessionRecording?.sessionsDir
+    });
     
     // Initialize proxy detection during construction
     this.initializeProxy();
@@ -193,6 +202,16 @@ export class BrowserManager {
       const page = await context.newPage();
       
       const instanceId = uuidv4();
+      
+      // Start session recording for this instance
+      const sessionId = await this.sessionRecorder.startSession(instanceId, {
+        browserType: config.browserType,
+        headless: config.headless,
+        viewport: config.viewport,
+        userAgent: config.userAgent,
+        metadata
+      });
+      
       const instance: BrowserInstance = {
         id: instanceId,
         browser,
@@ -201,6 +220,7 @@ export class BrowserManager {
         createdAt: new Date(),
         lastUsed: new Date(),
         isActive: true,
+        sessionId,
         ...(metadata && { metadata })
       };
 
@@ -210,6 +230,7 @@ export class BrowserManager {
         success: true,
         data: {
           instanceId,
+          sessionId,
           browserType: config.browserType,
           headless: config.headless,
           viewport: config.viewport,
@@ -273,12 +294,24 @@ export class BrowserManager {
         };
       }
 
+      // End session recording for this instance
+      await this.sessionRecorder.endSession(instanceId);
+      
+      // Get the session for returning session ID
+      const session = this.sessionRecorder.getSession(instanceId);
+      const sessionId = session?.id || instance.sessionId;
+
       await instance.browser.close();
       this.instances.delete(instanceId);
 
       return {
         success: true,
-        data: { instanceId, closed: true },
+        data: { 
+          instanceId, 
+          closed: true,
+          sessionId,
+          message: sessionId ? `Browser closed. Session ID: ${sessionId}` : 'Browser closed'
+        },
         instanceId
       };
     } catch (error) {
@@ -375,6 +408,14 @@ export class BrowserManager {
       console.log(`Cleaned up inactive instance: ${instanceId}`);
     }
   }
+
+  /**
+   * Get session recorder instance
+   */
+  getSessionRecorder(): SessionRecorder {
+    return this.sessionRecorder;
+  }
+
 
   /**
    * Destroy manager

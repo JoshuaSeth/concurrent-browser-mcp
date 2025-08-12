@@ -1,0 +1,33 @@
+{
+  "id": "5a488b01-d955-4e16-b80c-0cf6413c6d7f",
+  "instanceId": "aba22833-2263-4a64-b810-19c908273d73",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T08:48:31.389Z",
+  "actions": [
+    {
+      "id": "d860ba9b-637a-487e-810b-1b751f0fd84a",
+      "timestamp": "2025-08-12T08:48:33.214Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "aba22833-2263-4a64-b810-19c908273d73",
+        "url": "https://en.wikipedia.org/wiki/Web_scraping"
+      },
+      "result": {
+        "url": "https://en.wikipedia.org/wiki/Web_scraping",
+        "title": "Web scraping - Wikipedia"
+      },
+      "duration": 0
+    }
+  ],
+  "metadata": {
+    "name": "enhanced-recording-test",
+    "description": "Testing full page data capture"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

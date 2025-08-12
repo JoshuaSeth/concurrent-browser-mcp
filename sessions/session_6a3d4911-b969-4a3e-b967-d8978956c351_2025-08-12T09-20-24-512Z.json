@@ -1,0 +1,35 @@
+{
+  "id": "6a3d4911-b969-4a3e-b967-d8978956c351",
+  "instanceId": "cf9db63b-59f0-4a75-a302-56bd8f7ef2f4",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:20:24.511Z",
+  "actions": [
+    {
+      "id": "b350dc97-aa54-4b8c-b4bf-6c2816ecc592",
+      "timestamp": "2025-08-12T09:20:24.512Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": true
+      },
+      "result": {
+        "instanceId": "cf9db63b-59f0-4a75-a302-56bd8f7ef2f4",
+        "sessionId": "6a3d4911-b969-4a3e-b967-d8978956c351",
+        "browserType": "chromium",
+        "headless": true,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "duration": 0
+    }
+  ],
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

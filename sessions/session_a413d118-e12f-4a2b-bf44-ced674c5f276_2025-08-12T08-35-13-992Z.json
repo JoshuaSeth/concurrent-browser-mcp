@@ -1,0 +1,18 @@
+{
+  "id": "a413d118-e12f-4a2b-bf44-ced674c5f276",
+  "instanceId": "a369f3c6-f1b0-4f1f-89d5-4420c2bf188f",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T08:35:13.992Z",
+  "actions": [],
+  "metadata": {
+    "name": "test-session",
+    "description": "Testing session recording functionality"
+  },
+  "config": {
+    "headless": false,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

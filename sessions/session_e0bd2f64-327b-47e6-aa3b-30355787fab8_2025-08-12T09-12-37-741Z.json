@@ -1,0 +1,17 @@
+{
+  "id": "e0bd2f64-327b-47e6-aa3b-30355787fab8",
+  "instanceId": "0101aa76-4f20-4c71-995d-a74a7957f0c1",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:12:37.741Z",
+  "actions": [],
+  "metadata": {
+    "name": "Search Form Test"
+  },
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

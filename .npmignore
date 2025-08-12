@@ -9,9 +9,19 @@ tsconfig.json
 .env.local
 
 # Test files
+test/
 tests/
 **/*.test.js
 **/*.test.ts
+test-*.js
+
+# Sessions (should be in user's cwd, not package)
+sessions/
+
+# Documentation (available on GitHub)
+docs/
+*.md
+!README.md
 
 # Development tools
 .vscode/

@@ -1,0 +1,14 @@
+{
+  "id": "54b92733-98b8-416b-9189-c246ed21ac3e",
+  "instanceId": "17100411-c5c6-4153-a61e-6d016fb7634c",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T09:39:42.927Z",
+  "actions": [],
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+}
