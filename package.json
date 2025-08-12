@@ -1,6 +1,6 @@
 {
   "name": "concurrent-browser-mcp-session",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A concurrent browser MCP server with session recording & replay - supports multiple parallel browser instances and captures all actions as JSON",
   "main": "dist/index.js",
   "type": "module",
