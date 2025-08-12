@@ -1,0 +1,50 @@
+{
+  "id": "1d5cf44d-7b9e-4a6e-a345-67de8230f483",
+  "instanceId": "6e6bf85e-dc14-4fda-87d6-3bf570124b8b",
+  "browserType": "chromium",
+  "startedAt": "2025-08-12T11:17:21.091Z",
+  "actions": [
+    {
+      "id": "5711fc79-f23b-4893-8f56-31748320a9b6",
+      "timestamp": "2025-08-12T11:17:21.092Z",
+      "tool": "browser_create_instance",
+      "parameters": {
+        "browserType": "chromium",
+        "headless": true
+      },
+      "result": {
+        "instanceId": "6e6bf85e-dc14-4fda-87d6-3bf570124b8b",
+        "sessionId": "1d5cf44d-7b9e-4a6e-a345-67de8230f483",
+        "browserType": "chromium",
+        "headless": true,
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "duration": 0
+    },
+    {
+      "id": "d00d4122-4d00-4479-9000-085d0d88c5bf",
+      "timestamp": "2025-08-12T11:17:22.214Z",
+      "tool": "browser_navigate",
+      "parameters": {
+        "instanceId": "6e6bf85e-dc14-4fda-87d6-3bf570124b8b",
+        "url": "https://example.com"
+      },
+      "result": {
+        "url": "https://example.com/",
+        "title": "Example Domain"
+      },
+      "duration": 0
+    }
+  ],
+  "config": {
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "endedAt": "2025-08-12T11:17:22.252Z"
+}

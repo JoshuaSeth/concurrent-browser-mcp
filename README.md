@@ -24,6 +24,12 @@ A multi-concurrent browser MCP (Model Context Protocol) server built with Playwr
 - 📝 **Session Management**: Save, load, and manage recorded browser sessions
 - 🔄 **CI/CD Ready**: Generated tests can be added to pipelines for regression testing
 
+### AI-Powered Visual Analysis (NEW)
+- 🤖 **Screenshot & Describe**: Take screenshots and get AI-generated descriptions using Google Gemini Vision API
+- 👁️ **Visual Understanding**: Analyze page layouts, UI elements, content, and visual design automatically
+- 🔍 **Instant Analysis**: Describe any URL without creating browser instances
+- 📊 **UI Verification**: Perfect for testing, debugging, and documenting UI states
+
 ## Installation
 
 ### Option 1: Install from npm (Recommended)
@@ -240,6 +246,74 @@ Proxy: Auto-detection enabled  # or shows detected proxy address
 - Proxy can be set via environment variables without manual configuration
 - Proxy detection is completed automatically at service startup without affecting runtime performance
 
+## AI-Powered Screenshot & Describe
+
+### Overview
+
+The Screenshot & Describe feature uses Google's Gemini Vision API (gemini-2.0-flash-exp) to automatically analyze and describe screenshots of web pages. This is invaluable for:
+- Understanding complex UI layouts
+- Verifying visual elements are displayed correctly
+- Debugging rendering issues
+- Creating documentation of UI states
+- Accessibility testing
+
+### Configuration
+
+Set your Gemini API key as an environment variable:
+```bash
+export GEMINI_API_KEY="your-gemini-api-key-here"
+```
+
+### Available Tools
+
+#### 1. `browser_screenshot_describe`
+Takes a screenshot of the current page in a browser instance and generates an AI description.
+
+```javascript
+// With existing browser instance
+await callTool('browser_screenshot_describe', {
+  instanceId: 'your-instance-id',
+  descriptionPrompt: 'Describe the main navigation and content areas',
+  fullPage: false
+});
+```
+
+#### 2. `screenshot_describe_url`
+Screenshots and describes any URL directly without needing a browser instance.
+
+```javascript
+// Direct URL analysis
+await callTool('screenshot_describe_url', {
+  url: 'https://example.com',
+  descriptionPrompt: 'What is the purpose of this page?',
+  captureHtml: true  // Optionally capture HTML too
+});
+```
+
+### Example Use Cases
+
+```javascript
+// Verify UI after navigation
+const result = await callTool('screenshot_describe_url', {
+  url: 'https://github.com',
+  descriptionPrompt: 'List all visible buttons and links in the main navigation'
+});
+console.log(result.data.description);
+// Output: "The main navigation contains: Sign in, Sign up, Product dropdown, Solutions dropdown..."
+
+// Debug rendering issues
+const analysis = await callTool('browser_screenshot_describe', {
+  instanceId: instanceId,
+  descriptionPrompt: 'Are there any visual glitches or misaligned elements?'
+});
+
+// Document UI state
+const documentation = await callTool('screenshot_describe_url', {
+  url: 'https://app.example.com/dashboard',
+  descriptionPrompt: 'Create a detailed description for documentation purposes'
+});
+```
+
 ## Session Recording & Test Generation
 
 ### How It Works
@@ -335,6 +409,11 @@ test('User Login Flow', async ({ page }) => {
 - `browser_get_element_attribute`: Get element attributes
 - `browser_screenshot`: Take page screenshots
 - `browser_get_markdown`: 🆕 Get Markdown content
+
+### AI-Powered Screenshot Analysis (NEW)
+
+- `browser_screenshot_describe`: 🆕 Take a screenshot and get AI-generated description of the current page using Gemini
+- `screenshot_describe_url`: 🆕 Screenshot any URL and get AI description without browser instance using Gemini
 
 ### Wait Operations
 

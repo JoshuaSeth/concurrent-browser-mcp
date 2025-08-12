@@ -1,6 +1,6 @@
 {
   "name": "concurrent-browser-mcp-session",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "A concurrent browser MCP server with session recording & replay - supports multiple parallel browser instances and captures all actions as JSON",
   "main": "dist/index.js",
   "type": "module",
@@ -19,7 +19,7 @@
     "mcp",
     "browser",
     "automation",
-    "playwright", 
+    "playwright",
     "concurrent",
     "parallel",
     "session-recording",
@@ -48,11 +48,13 @@
     "access": "public"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@modelcontextprotocol/sdk": "^0.6.0",
-    "playwright": "^1.48.0",
-    "uuid": "^10.0.0",
+    "chalk": "^5.3.0",
     "commander": "^12.0.0",
-    "chalk": "^5.3.0"
+    "openai": "^5.12.2",
+    "playwright": "^1.48.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -63,4 +65,4 @@
   "engines": {
     "node": ">=18.0.0"
   }
-} 
+}

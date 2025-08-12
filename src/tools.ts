@@ -7,6 +7,7 @@ import {
   TypeOptions, 
   ScreenshotOptions
 } from './types.js';
+import { ScreenshotDescribe, screenshotAndDescribe } from './screenshot-describe.js';
 
 export class BrowserTools {
   constructor(private browserManager: BrowserManager) {}
@@ -404,6 +405,52 @@ export class BrowserTools {
             }
           },
           required: ['instanceId']
+        }
+      },
+      {
+        name: 'browser_screenshot_describe',
+        description: 'Take a screenshot of a page and get an AI-generated description of what is visible. Uses OpenAI Vision API to analyze the screenshot and provide detailed descriptions of the UI, content, layout, and visual elements.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            instanceId: {
+              type: 'string',
+              description: 'Instance ID'
+            },
+            descriptionPrompt: {
+              type: 'string',
+              description: 'Custom prompt for the AI description (optional). If not provided, will generate a comprehensive description of all visible elements.'
+            },
+            fullPage: {
+              type: 'boolean',
+              description: 'Whether to capture the full page',
+              default: false
+            }
+          },
+          required: ['instanceId']
+        }
+      },
+      {
+        name: 'screenshot_describe_url',
+        description: 'Take a screenshot of any URL and get an AI-generated description without needing a browser instance. Useful for quick analysis of external websites. Uses OpenAI Vision API to provide detailed descriptions.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              description: 'The URL to screenshot and describe'
+            },
+            descriptionPrompt: {
+              type: 'string',
+              description: 'Custom prompt for the AI description (optional)'
+            },
+            captureHtml: {
+              type: 'boolean',
+              description: 'Whether to also capture the HTML content',
+              default: false
+            }
+          },
+          required: ['url']
         }
       },
 
@@ -1117,6 +1164,93 @@ export class BrowserTools {
             return {
               success: false,
               error: `Failed to save test: ${error}`
+            };
+          }
+
+        case 'browser_screenshot_describe':
+          try {
+            // First take a screenshot
+            const screenshotResult = await this.screenshot(args.instanceId, {
+              fullPage: args.fullPage || false,
+              type: 'png'
+            });
+            
+            if (!screenshotResult.success || !screenshotResult.data?.data) {
+              return {
+                success: false,
+                error: 'Failed to take screenshot'
+              };
+            }
+            
+            // Create ScreenshotDescribe instance
+            const sd = new ScreenshotDescribe();
+            
+            // Convert base64 to buffer and save temporarily
+            const tempPath = `/tmp/screenshot_${Date.now()}.png`;
+            const base64Data = screenshotResult.data.data.replace(/^data:image\/png;base64,/, '');
+            const buffer = Buffer.from(base64Data, 'base64');
+            await require('fs').promises.writeFile(tempPath, buffer);
+            
+            // Get AI description
+            const description = await sd.describeImage(
+              tempPath,
+              args.descriptionPrompt
+            );
+            
+            // Clean up temp file
+            await require('fs').promises.unlink(tempPath);
+            await sd.close();
+            
+            // Record action
+            await this.recordAction(args.instanceId, {
+              tool: name,
+              parameters: args,
+              result: { description: description.substring(0, 500) + '...' },
+              error: undefined
+            });
+            
+            return {
+              success: true,
+              data: {
+                screenshot: screenshotResult.data.data,
+                description,
+                message: 'Screenshot taken and described successfully'
+              }
+            };
+          } catch (error: any) {
+            return {
+              success: false,
+              error: `Failed to screenshot and describe: ${error.message}`
+            };
+          }
+          
+        case 'screenshot_describe_url':
+          try {
+            // Use the standalone function for URL screenshot & describe
+            const result = await screenshotAndDescribe(
+              args.url,
+              {}, // config (will use env var for API key)
+              {
+                captureHtml: args.captureHtml || false,
+                descriptionPrompt: args.descriptionPrompt
+              }
+            );
+            
+            return {
+              success: true,
+              data: {
+                screenshotPath: result.screenshotPath,
+                description: result.description,
+                url: result.url,
+                timestamp: result.timestamp,
+                html: result.html,
+                message: 'URL screenshot and description completed successfully'
+              }
+            };
+          } catch (error: any) {
+            return {
+              success: false,
+              error: `Failed to screenshot and describe URL: ${error.message}`
             };
           }
 
